@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hasil Seleksi OSIS</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+    body{
+        font-family:'Poppins',sans-serif;
+        margin:0;
+        background: linear-gradient(140deg,#05c5ff,#05C2FF);
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height:100vh;
+        padding:20px;
+        text-align:center;
+        overflow: hidden;
+     
+    }
+
+    #loadingBox{
+        text-align:center;
+        color:white;
+        animation: fadeIn .3s ease-in-out;
+    }
+
+    .loader{
+        border:6px solid rgba(255,255,255,0.3);
+        border-top:6px solid white;
+        width:70px;
+        height:70px;
+        border-radius:50%;
+        margin: auto;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin{100%{transform:rotate(360deg);}}
+
+    .box{
+        width:100%;
+        max-width:450px;
+        background:rgb(198, 234, 255);
+        padding:30px;
+        border-radius:18px;
+        color:#333;
+        display:none;
+        box-shadow:0px 0px 25px rgba(0,0,0,.3);
+        animation:fadeInUp .9s ease-in-out;
+    }
+
+    @keyframes fadeInUp{
+        from {opacity:0; transform: translateY(40px);}
+        to {opacity:1; transform: translateY(0);}
+    }
+
+    img{
+        width:105px;
+        margin-bottom:10px;
+    }
+
+    .title{
+        font-size:20px;
+        font-weight:600;
+        margin-top:5px;
+    }
+
+    .info{
+        margin: 10px 0;
+        font-size:17px;
+        line-height:25px;
+    }
+
+    .status{
+        font-size:22px;
+        margin-top:20px;
+        font-weight:bold;
+        padding:12px;
+        border-radius:10px;
+        animation: pop .6s ease-out;
+    }
+
+    @keyframes pop { 0% {transform: scale(.7);} 100% {transform: scale(1);} }
+
+    .lulus{
+        background:#dbffe7;
+        color:#008f2c;
+        border:2px solid #00d144;
+    }
+    .tidak{
+        background:#ffe6e6;
+        color:#ff2f2f;
+        border:2px solid #ff3b3b;
+    }
+
+    .btn{
+        margin-top:25px;
+        display:inline-block;
+        padding:12px 20px;
+        background:#005fff;
+        color:white;
+        text-decoration:none;
+        font-weight:600;
+        border-radius:10px;
+        transition:0.3s;
+    }
+
+    .btn:hover{
+        background:#003dcc;
+    }
+
+    .typing{
+        border-right:3px solid white;
+        width:0;
+        white-space:nowrap;
+        overflow:hidden;
+        margin:auto;
+        animation: typing 2s steps(20), blink .6s infinite alternate;
+        font-size:18px;
+        margin-top:15px;
+        opacity:.9;
+    }
+
+    @keyframes typing{from{width:0;}to{width:260px;}}
+    @keyframes blink{50%{border-color:transparent;}}
+
+</style>
+</head>
+<body>
+
+<div id="loadingBox">
+    <div class="loader"></div>
+    <div class="typing">Mohon Tunggu Sebentar....</div>
+</div>
+
+<div class="box" id="resultBox">
+    <img src="logo2.png">
+
+    <div class="title">PENGUHASIL SELEKSI OSIS</div>
+
+    <div class="info" id="nama"></div>
+    <div class="info" id="kelas"></div>
+    <div class="info" id="sekbid"></div>
+
+    <div id="status" class="status"></div>
+
+    <a href="index.html" class="btn">Cek Data Lain</a>
+</div>
+
+<script>
+const data = [
+{nis:"202601",nama:"Ripki Ardiansyah",kelas:"X 2",status:"Lulus",sekbid:"S. Pendidikan"},
+{nis:"202602",nama:"Faturahman",kelas:"X 1",status:"Lulus",sekbid:"S. Agama"},
+{nis:"202603",nama:"Naisya Difa Nurcahya",kelas:"VIII A",status:"Lulus",sekbid:"S. UMKM"},
+{nis:"202604",nama:"M.Ardiansyah",kelas:"XI 2",status:"Lulus",sekbid:"S. Olahraga"},
+{nis:"202605",nama:"Qyara Abigail Chavali",kelas:"VII A",status:"Tidak Lulus",sekbid:"S. Kebersihan/Kesehatan"},
+{nis:"202606",nama:"Muhamad Ridwan",kelas:"X 2",status:"Lulus",sekbid:"S. Olahraga"},
+{nis:"202607",nama:"M.Rizky Azriel A.R",kelas:"X 2",status:"Lulus",sekbid:"S. Olahraga"},
+{nis:"202608",nama:"Mila Aprianda",kelas:"VIII A",status:"Lulus",sekbid:"S. Agama"},
+{nis:"202609",nama:"Siti Sa'adah",kelas:"VIII B",status:"Lulus",sekbid:"S. Agama"},
+{nis:"202610",nama:"Siska Istiqomah",kelas:"VIII A",status:"Tidak Lulus",sekbid:"S. Olahraga"},
+{nis:"202611",nama:"Nurul Husna",kelas:"VIII A",status:"Lulus",sekbid:"S. Pendidikan"},
+{nis:"202612",nama:"Sania Nur Padilla",kelas:"VIII A",status:"Lulus",sekbid:"S. UMKM"},
+{nis:"202613",nama:"Fazar Nurhakim",kelas:"XI 1",status:"Lulus",sekbid:"S. Pendidikan"},
+{nis:"202614",nama:"Muhammad Cep Ilham",kelas:"X 2",status:"Lulus",sekbid:"S. Agama"},
+{nis:"202615",nama:"Fitrianingsih",kelas:"VIII A",status:"Lulus",sekbid:"S. Agama"},
+{nis:"202616",nama:"Diki Alamsyah",kelas:"X 1",status:"Tidak Lulus",sekbid:"S. Pendidikan"},
+{nis:"202617",nama:"Dea Sholihat",kelas:"X 2",status:"Tidak Lulus",sekbid:"S. Agama"},
+{nis:"202618",nama:"Lisna Wati",kelas:"X 1",status:"Tidak Lulus",sekbid:"S. Pendidikan"},
+{nis:"202619",nama:"Siti Aisyah",kelas:"X 1",status:"Tidak Lulus",sekbid:"S. Kebersihan/Kesehatan"},
+{nis:"202620",nama:"Silvia Anggraeni Putri",kelas:"VII A",status:"Tidak Lulus",sekbid:"S. Olahraga"},
+{nis:"202621",nama:"Islah Ibnu Azzis",kelas:"X 2",status:"Lulus",sekbid:"S. Olahraga"},
+{nis:"202622",nama:"Siti Alfi Nursa'diah",kelas:"XI 1",status:"Lulus",sekbid:"S. Pendidikan"},
+{nis:"202623",nama:"Aulia Nurhaliza",kelas:"X 2",status:"Lulus",sekbid:"S. Pendidikan"},
+{nis:"202624",nama:"Robi Andriyansah",kelas:"X 1",status:"Lulus",sekbid:"S. HUMAS"},
+{nis:"202625",nama:"Sri Nursipa",kelas:"VIII B",status:"Lulus",sekbid:"S. Kebersihan/Kesehatan"},
+{nis:"202626",nama:"Muhammad Rizqi Fadillah",kelas:"X 1",status:"Lulus",sekbid:"S. Pendidikan"},
+{nis:"202627",nama:"Tomi Alfiansyah Wirahman",kelas:"VII B",status:"Tidak Lulus",sekbid:"S. Kebersihan/Kesehatan"},
+{nis:"202628",nama:"Desila Nurhayani",kelas:"VIII B",status:"Tidak Lulus",sekbid:"S. Olahraga"},
+{nis:"202629",nama:"Syahla Maulidiyah",kelas:"VIII A",status:"Lulus",sekbid:"S. UMKM"},
+{nis:"202630",nama:"Naysilanurullatifah",kelas:"VIII A",status:"Lulus",sekbid:"S. UMKM"},
+{nis:"202631",nama:"Putri Nadin",kelas:"X 2",status:"Lulus",sekbid:"S. UMKM"},
+{nis:"202632",nama:"Aulia Rohmah",kelas:"X 2",status:"Lulus",sekbid:"S. UMKM"},
+{nis:"202633",nama:"Sagita Azzahratul Aulia",kelas:"X 2",status:"Lulus",sekbid:"S. Agama"},
+{nis:"202634",nama:"Zikra Nuraini",kelas:"X 2",status:"Lulus",sekbid:"S. Pendidikan"},
+{nis:"202635",nama:"Salma Sri Pratiwi",kelas:"VIII B",status:"Tidak Lulus",sekbid:"S. Kebersihan/Kesehatan"},
+{nis:"202636",nama:"Asyifa Nurul Qolbi",kelas:"X 1",status:"Lulus",sekbid:"S. Pendidikan"},
+{nis:"202637",nama:"Alika Nurul Amalia",kelas:"X 2",status:"Lulus",sekbid:"S. Olahraga"},
+{nis:"202638",nama:"Ayyang Julianti",kelas:"X 2",status:"Lulus",sekbid:"S. Pendidikan"},
+{nis:"202639",nama:"Keyla Regina Putri",kelas:"VIII A",status:"Lulus",sekbid:"S. HUMAS"},
+{nis:"202640",nama:"Shesillia Awaliah",kelas:"VIII A",status:"Tidak Lulus",sekbid:"S. UMKM"},
+{nis:"202641",nama:"Tia Putri Aulia",kelas:"X 2",status:"Lulus",sekbid:"S. Pendidikan"},
+{nis:"202642",nama:"Edo Mardani",kelas:"X 1",status:"Lulus",sekbid:"S. HUMAS"},
+{nis:"202643",nama:"Nurhaliza",kelas:"X 2",status:"Lulus",sekbid:"S. Pendidikan"},
+{nis:"202644",nama:"Reza",kelas:"X 1",status:"Lulus",sekbid:"S. Olahraga"},
+{nis:"202645",nama:"Zahra Wahdiatun Nisa",kelas:"VIII A",status:"Lulus",sekbid:"S. Agama"},
+{nis:"202646",nama:"Silvia Mesya Nu'raeni",kelas:"X 1",status:"Lulus",sekbid:"S. Kebersihan/Kesehatan"},
+{nis:"202647",nama:"Talita Nabila Putri",kelas:"VIII A",status:"Tidak Lulus",sekbid:"S. Kebersihan/Kesehatan"},
+{nis:"202648",nama:"Salma Sri Pratiwi",kelas:"VIII B",status:"Tidak Lulus",sekbid:"S. Kebersihan/Kesehatan"},
+{nis:"202649",nama:"Khadija Fhadiyatun Nadia",kelas:"VII A",status:"Lulus",sekbid:"S. HUMAS"},
+{nis:"202650",nama:"Muhamad Irpan",kelas:"X 2",status:"Lulus",sekbid:"S. Kebersihan/Kesehatan"},
+{nis:"202651",nama:"Nazwa Lutfiah Azzahra",kelas:"XI 2",status:"Lulus",sekbid:"S. Pendidikan"},
+{nis:"202652",nama:"Yoga Permana",kelas:"XI 2",status:"Lulus",sekbid:"S. Puldok"},
+{nis:"202653",nama:"Adira Nur Jati",kelas:"X 2",status:"Lulus",sekbid:"S. Agama"},
+{nis:"202654",nama:"Dini Andriyani",kelas:"X 1",status:"Lulus",sekbid:"S. Pendidikan"},
+{nis:"202655",nama:"Adila Alma Nur Syafitri",kelas:"X 1",status:"Lulus",sekbid:"S. Kebersihan/Kesehatan"},
+{nis:"202656",nama:"Windi Widianti",kelas:"X 1",status:"Lulus",sekbid:"S. Kebersihan/Kesehatan"},
+{nis:"202657",nama:"Nur Halizah",kelas:"X 1",status:"Lulus",sekbid:"S. Kebersihan/Kesehatan"},
+{nis:"202658",nama:"Putri Yayu",kelas:"VIII B",status:"Lulus",sekbid:"S. Pendidikan"},
+{nis:"202659",nama:"M. Reza Permana",kelas:"VIII B",status:"Lulus",sekbid:"S. HUMAS"},
+{nis:"202660",nama:"Aqila Salsabila",kelas:"VII B",status:"Tidak Lulus",sekbid:"S. HUMAS"},
+{nis:"202661",nama:"Terry Indrias Putri",kelas:"VIII B",status:"Tidak Lulus",sekbid:"S. Pendidikan"},
+{nis:"202662",nama:"Dila Aprillia",kelas:"VII B",status:"Tidak Lulus",sekbid:"S. Olahraga"},
+{nis:"202663",nama:"Karlina Melisa Putri",kelas:"VII B",status:"Tidak Lulus",sekbid:"S. Agama"},
+{nis:"202664",nama:"Akbar Aidil Putra",kelas:"X 2",status:"Tidak Lulus",sekbid:"S. Olahraga"},
+{nis:"202665",nama:"Annisa Nur Fadilah",kelas:"X 2",status:"Tidak Lulus",sekbid:"S. Olahraga"},
+{nis:"202666",nama:"Muhamad Ridwan",kelas:"X 2",status:"Lulus",sekbid:"S. Olahraga"},
+{nis:"202667",nama:"M Raihan Al Kausani",kelas:"X 1",status:"Lulus",sekbid:"S. Olahraga"},
+{nis:"202668",nama:"Muhammad Aji Saputra",kelas:"VII B",status:"Lulus",sekbid:"S. Kebersihan/Kesehatan"},
+{nis:"202669",nama:"Zaina Mutmainah",kelas:"VIII B",status:"Lulus",sekbid:"S. Pendidikan"},
+{nis:"202670",nama:"Firman Ukina",kelas:"X 2",status:"Tidak Lulus",sekbid:"S. Agama"},
+{nis:"202671",nama:"M Ridho",kelas:"VIII B",status:"Lulus",sekbid:"S. Olahraga"}
+];
+
+const params = new URLSearchParams(window.location.search);
+const nisCari = params.get("nis");
+
+setTimeout(() => {
+    document.getElementById("loadingBox").style.display = "none";
+    document.getElementById("resultBox").style.display = "block";
+
+    let siswa = data.find(s => s.nis === nisCari);
+
+    if(siswa){
+        document.getElementById("nama").innerHTML = "<b>" + siswa.nama + "</b>";
+        document.getElementById("kelas").innerHTML = "Kelas: <b>" + siswa.kelas + "</b>";
+        document.getElementById("sekbid").innerHTML = "Bidang: <b>" + siswa.sekbid + "</b>";
+
+        const statusBox = document.getElementById("status");
+
+        if(siswa.status.toLowerCase() === "lulus"){
+            statusBox.innerHTML = "🎉 SELAMAT! ANDA LOLOS SELEKSI 🎉";
+            statusBox.classList.add("lulus");
+        } else {
+            statusBox.innerHTML = "❌ MAAF ANDA BELUM LOLOS";
+            statusBox.classList.add("tidak");
+        }
+
+    }else{
+        document.getElementById("status").innerHTML = "❌ DATA TIDAK DITEMUKAN";
+        document.getElementById("status").classList.add("tidak");
+    }
+
+}, 2500);
+</script>
+
+</body>
+</html>

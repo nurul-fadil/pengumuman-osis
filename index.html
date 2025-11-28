@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Pengumuman OSIS</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg1:#000000;--accent:#5bd7f7;--card:rgba(255,255,255,0.08)}
+  *{box-sizing:border-box}
+  body{
+    margin:0;height:100vh;display:flex;align-items:center;justify-content:center;
+    font-family:"Poppins",sans-serif;background:linear-gradient(135deg,#109ed6,#2fcafd);
+    color:rgb(255, 255, 255);padding:16px;
+  }
+  .card{
+    width:100%;max-width:420px;background:var(--card);backdrop-filter:blur(8px);
+    padding:28px;border-radius:14px;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,0.25)
+  }
+  .logo{width:96px;height:auto;margin-bottom:10px}
+  h1{margin:6px 0 4px;font-size:20px}
+  p.sub{margin:0 0 18px;color:rgba(255,255,255,0.9)}
+  input{
+    width:100%;padding:12px;border-radius:10px;border:none;font-size:16px;
+    outline:none;text-align:center;background:rgba(255,255,255,0.12);color:white;
+  }
+  button{
+    width:100%;margin-top:14px;padding:12px;border-radius:10px;border:0;background:#ffd166;
+    color:#082032;font-weight:700;font-size:16px;cursor:pointer;
+    box-shadow:0 6px 18px rgba(0,0,0,0.15);
+  }
+  button:active{transform:translateY(1px)}
+  small{display:block;margin-top:12px;color:rgba(255,255,255,0.85)}
+  @media (max-width:420px){ .card{padding:20px} h1{font-size:18px} }
+</style>
+</head>
+<body>
+  <div class="card" role="main">
+    <img src="logo1.png" alt="Logo" class="logo">
+    <h1>PENGUMUMAN CALON OSIS</h1>
+    <p class="sub">YAYASAN BINGKAI CENDIKIA</p>
+
+    <input id="nisInput" inputmode="numeric" pattern="[0-9]*" placeholder="Contoh: 202602" />
+    <button id="cekBtn">CEK HASIL</button>
+
+    <small>© 2025 OSIS BINGKAI CENDIKIA</small>
+  </div>
+
+<script>
+  const btn = document.getElementById('cekBtn');
+  const input = document.getElementById('nisInput');
+
+  function goCheck(){
+    const nis = (input.value || '').trim();
+    if(!nis){
+      alert('Masukkan NIS terlebih dahulu');
+      input.focus();
+      return;
+    }
+    // encode NIS in URL
+    window.location.href = 'result.html?nis=' + encodeURIComponent(nis);
+  }
+
+  btn.addEventListener('click', goCheck);
+  input.addEventListener('keydown', (e) => { if(e.key === 'Enter') goCheck(); });
+</script>
+</body>
+</html>
